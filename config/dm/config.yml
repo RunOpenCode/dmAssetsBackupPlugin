@@ -1,0 +1,15 @@
+default:
+  dmAssetsBackupPlugin:
+    locations:
+      backup_dir:              %SF_ROOT_DIR%/data/dm/backup/assets
+      source_dir:              %SF_UPLOAD_DIR%
+    rotations:
+      max_backup_files:        10
+      max_backup_size:         100M
+    adapters:
+      dmAssetsBackupAdapterTar:
+        extensions:     [ tar, tar.gz, tar.bz2 ]
+        use:            tar
+      dmAssetsBackupAdapterZip:
+        extensions:     [ zip ]
+        use:            zip

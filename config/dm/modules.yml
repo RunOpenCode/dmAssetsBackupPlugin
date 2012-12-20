@@ -1,0 +1,7 @@
+System:
+
+  Backup:
+
+    dmAssetsBackup:
+      name:                 Assets backup
+      front:                false

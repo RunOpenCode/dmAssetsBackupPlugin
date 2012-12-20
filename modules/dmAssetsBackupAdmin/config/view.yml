@@ -1,0 +1,5 @@
+indexSuccess:
+
+  stylesheets:  [ admin.dataTable, admin.form, dmAssetsBackupPlugin.default ]
+
+  javascripts:  [ lib.dataTable, dmAssetsBackupPlugin.launch ]

@@ -1,0 +1,219 @@
+#dm_admin_content {
+    .dm-assets-backup-plugin {
+        
+        .dataTables_wrapper {
+            position: relative;
+            clear: both;
+            margin: 1em 0.5em;
+            
+            .dataTables_processing {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 250px;
+                height: 30px;
+                margin-left: -125px;
+                margin-top: -15px;
+                padding: 14px 0 2px 0;
+                border: 1px solid #ddd;
+                text-align: center;
+                color: #999;
+                font-size: 14px;
+                background-color: white;
+            }
+            
+            .dataTables_length {
+                width: 40%;
+                float: left;
+            }
+
+            .dataTables_filter {
+                width: 50%;
+                float: right;
+                text-align: right;
+            }
+
+            .dataTables_info {
+                width: 60%;
+                float: left;
+            }
+
+            .dataTables_paginate {
+                width: 400px;
+                float: right;
+                text-align: right;
+            }
+
+            .paginate_disabled_previous, 
+            .paginate_enabled_previous, 
+            .paginate_disabled_next, 
+            .paginate_enabled_next {
+                height: 19px;
+                width: 19px;
+                margin-left: 3px;
+                float: left;
+            }
+            
+            .paginate_disabled_previous {
+                background-image: url('../images/back_disabled.jpg');
+            }
+
+            .paginate_enabled_previous {
+                background-image: url('../images/back_enabled.jpg');
+            }
+
+            .paginate_disabled_next {
+                background-image: url('../images/forward_disabled.jpg');
+            }
+
+            .paginate_enabled_next {
+                background-image: url('../images/forward_enabled.jpg');
+            }
+             
+            .fg-button {
+                padding: 3px 8px;
+                margin: 0 1px;
+                cursor: pointer;
+            }
+
+
+            table {
+                margin: 0 auto;
+                width: 100%;
+                clear: both;
+
+                thead th,
+                tfoot th {
+                    padding: 3px 18px 3px 10px;
+                    font-weight: bold;
+                    cursor: pointer;
+                }
+                
+                tr.heading2 td {
+                    border-bottom: 1px solid #aaa;
+                }
+                
+                td {
+                    padding: 3px 10px;
+                }
+                th.center,
+                td.center {
+                    text-align: center;
+                }
+                
+                tr.odd {
+                    background-color: #E2E4FF;
+                }
+                
+                tr.even {
+                    background-color: white;
+                }
+                
+                .css_right {
+                    float: right;
+                }
+
+                .fg-button {
+                    padding: 3px 8px;
+                    margin: 0 1px;
+                    cursor: pointer;
+                }
+                
+                .top,
+                .bottom {
+                    padding: 15px;
+                    background-color: #F5F5F5;
+                    border: 1px solid #CCCCCC;
+                }
+
+                .top .dataTables_info {
+                    float: none;
+                }
+
+                span.boolean {
+                    cursor: pointer;
+                }
+
+                .clear {
+                    clear: both;
+                }
+                .dataTables_empty {
+                    text-align: center;
+                }
+                tfoot input {
+                    margin: 0.5em 0;
+                    width: 100%;
+                    color: #444;
+                }
+
+                .paging_full_numbers {
+                    width: 400px;
+                    height: 22px;
+                    line-height: 22px;
+                }
+
+                .paging_full_numbers span.paginate_button,
+                .paging_full_numbers span.paginate_active {
+                    border: 1px solid #aaa;
+                    border-radius: 5px;
+                    -webkit-border-radius: 5px;
+                    -moz-border-radius: 5px;
+                    padding: 2px 5px;
+                    margin: 0 3px;
+                    cursor: pointer;
+                }
+
+                .paging_full_numbers span.paginate_button {
+                    background-color: #ddd;
+                }
+
+                .paging_full_numbers span.paginate_button:hover {
+                    background-color: #ccc;
+                }
+
+                .paging_full_numbers span.paginate_active {
+                    background-color: #99B3FF;
+                }
+
+                tfoot input.search_init {
+                    color: #999;
+                }
+
+                tr.odd {
+
+                    td.sorting_1 {
+                        background-color: #D3D6FF;
+                    }
+
+                    td.sorting_2 {
+                        background-color: #DADCFF;
+                    }
+
+                    td.sorting_3 {
+                        background-color: #E0E2FF;
+                    }
+                }
+
+                tr.even {
+                    td.sorting_1 {
+                        background-color: #EAEBFF;
+                    }
+                    td.sorting_2 {
+                        background-color: #F2F3FF;
+                    }
+                    td.sorting_3 {
+                        background-color: #F9F9FF;
+                    }
+                }
+            }
+        }
+
+        div.fg-toolbar {
+            padding: 0.5em;
+            background-image: url(../../dmCorePlugin/lib/jquery-ui/css/images/ui-bg_highlight-soft_75_cccccc_1x100.png);
+            margin-left: 1px;
+        }
+    }
+}
+
+

@@ -1,0 +1,6 @@
+css:
+  dmAssetsBackupPlugin:
+    default: dmAssetsBackupPlugin
+js:
+  dmAssetsBackupPlugin:
+    launch: dmAssetsBackupPlugin
