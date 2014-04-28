@@ -9,13 +9,11 @@ class dmAssetsBackupService extends dmConfigurable
         $adapterClass,
         $adapter;
 
-    public function __construct($user, dmFilesystem $filesystem, $adapter, array $options)
+    public function __construct($user, dmFilesystem $filesystem)
     {
         $this->user = $user;
         $this->filesystem = $filesystem;
-        $this->adapterClass = $adapter;
-
-        $this->initialize($options);
+        $this->adapterClass = sfConfig::get('dm_dmAssetsBackupPlugin_adapter');
     }
     
     public function getSourceDirectory()
@@ -127,12 +125,6 @@ class dmAssetsBackupService extends dmConfigurable
         }
     }
     
-    protected function initialize(array $options)
-    {
-        $this->configure($options);
-    }
-
-    
     protected function getAdapter()
     {
         if ($this->adapter) {
@@ -151,57 +143,47 @@ class dmAssetsBackupService extends dmConfigurable
     }
     
     protected function rotate() {
-        $backups = $this->fetchBackups();        
-        if (count($backups) == 0) {
-            return;
-        }
-        
-        $sorted = array();
-        
-        for ($i = 0; $i < count($backups); $i++) {
-             $sorted[$backups[$i]] = filemtime($this->getFullPath($backups[$i]));
-        }
-        
-        arsort($sorted);        
-        
-        $counter = 0;
-        $delete = array();
-        $sizeCount = 0;
         $config = sfConfig::get('dm_dmAssetsBackupPlugin_rotations');
-        $maxSize = $config['max_backup_size'];
-        $units = substr($config['max_backup_size'], -2);
-        if (substr($units, -1) == 'B') {
-            $units = substr($units, 0, 1);
-            $maxSize = (int) substr($maxSize, 0, strlen($maxSize)-2);
-        } else {
-            $units = substr($units, -1);
-            $maxSize = (int) substr($maxSize, 0, strlen($maxSize)-1);
-        }
-        
-        foreach ($sorted as $file => $mktime) {
-            $counter++;
-            $sizeCount += filesize($file);  
-            switch ($units) {
-                case 'M': // MegaBytes
-                    if (round(($sizeCount / 1048576), 0) > $config['max_backup_size']) {
-                        $delete[] = $file;
-                        continue;
-                    }
-                    break;
-                case 'G': // GigaBytes
-                    if (round(($sizeCount / 1073741824), 0) > $config['max_backup_size']) {
-                        $delete[] = $file;
-                        continue;
-                    }
-                    break;
+
+        if ($config['max_backup_size'] ||  $config['max_backup_files']) {
+            $backups = $this->fetchBackups();
+
+            if (count($backups) == 0) {
+                return;
             }
-            if ($counter > $config['max_backup_files']) {
-                $delete[] = $file;
-                continue;
+
+            $sorted = array();
+
+            for ($i = 0; $i < count($backups); $i++) {
+                $sorted[$backups[$i]] = filemtime($this->getFullPath($backups[$i]));
             }
-        }   
-        foreach ($delete as $file) {
-            $this->deleteBackup($file);
+
+            arsort($sorted);
+
+            $delete = array();
+            $sizeCount = 0;
+            $counter = 0;
+
+            foreach ($sorted as $file => $mktime) {
+                $counter++;
+                $sizeCount += filesize($file);
+
+                if ($counter == 1) continue; // At least one backup file is required to be present on system...
+
+                if (!is_null($config['max_backup_size']) && $sizeCount > $config['max_backup_size']) {
+                    $delete[] = $file;
+                    continue;
+                }
+
+                if (!is_null($config['max_backup_files']) && $counter > $config['max_backup_files']) {
+                    $delete[] = $file;
+                    continue;
+                }
+            }
+
+            foreach ($delete as $file) {
+                @unlink($file);
+            }
         }
     }
 }

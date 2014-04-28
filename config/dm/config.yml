@@ -4,8 +4,9 @@ default:
       backup_dir:              %SF_ROOT_DIR%/data/dm/backup/assets
       source_dir:              %SF_UPLOAD_DIR%
     rotations:
-      max_backup_files:        10
-      max_backup_size:         100M
+      max_backup_files:        3
+      max_backup_size:         4294967296
+    adapter:                   dmAssetsBackupAdapterTar
     adapters:
       dmAssetsBackupAdapterTar:
         extensions:     [ tar, tar.gz, tar.bz2 ]

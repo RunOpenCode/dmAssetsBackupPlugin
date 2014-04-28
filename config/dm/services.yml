@@ -1,12 +1,10 @@
 parameters:
 
   assets_backup.class:       dmAssetsBackupService
-  assets_backup.adapter:     dmAssetsBackupAdapterTar
-  assets_backup.options:     []
 
 services:
 
   assets_backup:
     class:                %assets_backup.class%
     shared:               true
-    arguments:            [ @user, @filesystem, %assets_backup.adapter%, %assets_backup.options% ]
+    arguments:            [ @user, @filesystem ]

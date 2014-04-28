@@ -32,8 +32,9 @@ echo _open('div.dm-assets-backup-plugin');
             echo _close('thead');
 
             echo _open('tbody');
-
+                $count = 0;
                 foreach ($backups as $backup) {
+
                     if (count($backups)) {
                         
                         $fileInfo = get_file_properties($backup);
@@ -56,12 +57,12 @@ echo _open('div.dm-assets-backup-plugin');
                                         ->title(__('Delete this backup file'))
                                         ->text(__('Delete'))).                               
                             _close('ul');
-
-                        echo _tag('tr',
+                        $count++;
+                        echo _tag('tr'. (($count == count($backups)) ? '.last' : ''),
                             _tag('td', _tag('input.assets-backup-file', array('type'=>'checkbox', 'name'=>'file['.$fileInfo['basename'].']'))).
                             _tag('td', $fileInfo['basename']).
                             _tag('td', $fileInfo['mime']).  
-                            _tag('td', format_date($fileInfo['created'], 'g', $sf_user->getCulture())).
+                            _tag('td', format_date($fileInfo['created'], 'G', $sf_user->getCulture())).
                             _tag('td', get_posix_file_group_info_by_id($fileInfo['group'])).
                             _tag('td', get_posix_file_owner_info_by_id($fileInfo['owner'])).
                             _tag('td', format_posix_file_permissions_to_human($fileInfo['permissions'])).
@@ -69,7 +70,6 @@ echo _open('div.dm-assets-backup-plugin');
                             _tag('td', $actionsHTML)
                         );
                         $totalBackupSize += $fileInfo['size'];
-                                   
                     }    
                 }
             echo _close('tbody');
@@ -85,13 +85,30 @@ echo _open('div.dm-assets-backup-plugin');
                     'action' => _link('dmAssetsBackupAdmin/deleteAll')->param('key','DeleteAll')->getHref()
                 ))));
             echo _close('ul');
-            echo _tag('div.dm_help_wrap', array('style'=>'float:right; margin-top:2px;'), __('Total assets backup stored in: '). " ". format_file_size_from_bytes($totalBackupSize) . ' ' .
+            echo _tag('div.dm_help_wrap', array('style'=>'float:right; margin-top:2px;'), __('Total assets backup stored in: '). ' '. _tag('strong', format_file_size_from_bytes($totalBackupSize)) . ' ' .
+                _tag('span', '&nbsp;&nbsp;').
                 _tag('input.backup-button', array('type'=>'button', 'value'=>__('Backup assets now'), 'name'=>'_backup', 'json'=>array(
                     'action' => _link('dmAssetsBackupAdmin/backup')->param('key','Backup')->getHref()
                 )))
                 );
         echo _close('div');
     echo _close('div');
+
+
+echo _open('div.help_box');
+    echo _tag('strong', __('NOTE:'));
+        echo ' ';
+    echo _tag('span', __('Table row with bolder text marks latest backup.'));
+        echo ' ';
+
+    $rotations = sfConfig::get('dm_dmAssetsBackupPlugin_rotations');
+
+    echo _tag('span', __('Current backup settings are: number of maximum backup files allowed is %max_backup_files%, backup storage size allowed is %max_backup_storage_size%.', array(
+        '%max_backup_files%' => _tag('strong', ($rotations['max_backup_files']) ? $rotations['max_backup_files'] : __('unlimited')),
+        '%max_backup_storage_size%' => _tag('strong', ($rotations['max_backup_size']) ? format_file_size_from_bytes($rotations['max_backup_size']) : __('unlimited'))
+    )));
+
+echo _close('div');
 
     echo _open('div.dm_box.big');
         echo _tag('h1.title', __('Setup a cron to backup assets periodically'));

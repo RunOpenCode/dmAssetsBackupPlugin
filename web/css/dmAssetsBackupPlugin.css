@@ -147,6 +147,12 @@
 #dm_admin_content .dm-assets-backup-plugin .dataTables_wrapper table tfoot input.search_init {
   color: #999;
 }
+#dm_admin_content .dm-assets-backup-plugin .dataTables_wrapper table tr.last td {
+  font-weight: bold;
+}
+#dm_admin_content .dm-assets-backup-plugin .dataTables_wrapper table tr.last td:last-child {
+  font-weight: normal;
+}
 #dm_admin_content .dm-assets-backup-plugin .dataTables_wrapper table tr.odd td.sorting_1 {
   background-color: #D3D6FF;
 }
